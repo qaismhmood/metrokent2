@@ -1,0 +1,321 @@
+:root {
+    --primary-color: #ff5722;
+    --secondary-color: #2c3e50;
+    --text-color: #ffffff;
+    --control-bg: rgba(0, 0, 0, 0.7);
+    --hover-color: rgba(255, 255, 255, 0.2);
+    --highlight-color: #ff9800;
+    --progress-color: var(--primary-color);
+    --volume-color: var(--primary-color);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #000;
+    color: var(--text-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.video-player-container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.video-wrapper {
+    position: relative;
+    width: 100%;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    aspect-ratio: 16 / 9;
+    background-color: #000;
+}
+
+.video-element {
+    width: 100%;
+    height: 100%;
+    display: block;
+    outline: none;
+    cursor: pointer;
+}
+
+.initial-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.5);
+    transition: opacity 0.3s ease;
+    z-index: 2;
+}
+
+.initial-overlay.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.big-play-btn {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background-color: var(--primary-color);
+    border: none;
+    color: white;
+    font-size: 30px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.big-play-btn:hover {
+    transform: scale(1.1);
+    background-color: var(--highlight-color);
+}
+
+.video-title {
+    margin-top: 20px;
+    font-size: 2rem;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.8);
+}
+
+.video-controls {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: var(--control-bg);
+    padding: 10px 15px;
+    display: flex;
+    flex-direction: column;
+    transition: opacity 0.3s ease;
+    z-index: 3;
+}
+
+.video-wrapper:hover .video-controls {
+    opacity: 1;
+}
+
+.progress-controls {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.progress-bar {
+    flex-grow: 1;
+    height: 6px;
+    border-radius: 3px;
+    background: rgba(255, 255, 255, 0.2);
+    cursor: pointer;
+    appearance: none;
+    outline: none;
+    margin: 0 10px;
+    transition: height 0.2s ease;
+}
+
+.progress-bar::-webkit-slider-thumb {
+    appearance: none;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background: var(--progress-color);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.progress-bar:hover {
+    height: 8px;
+}
+
+.progress-bar::-webkit-slider-thumb:hover {
+    transform: scale(1.2);
+}
+
+.time-display {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.8);
+    white-space: nowrap;
+}
+
+.main-controls {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.left-controls, .right-controls {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.control-btn {
+    background: transparent;
+    border: none;
+    color: var(--text-color);
+    font-size: 1.1rem;
+    cursor: pointer;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    transition: all 0.2s ease;
+}
+
+.control-btn:hover {
+    background: var(--hover-color);
+    transform: scale(1.1);
+}
+
+.volume-controls {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.volume-slider {
+    width: 80px;
+    height: 6px;
+    border-radius: 3px;
+    background: rgba(255, 255, 255, 0.2);
+    appearance: none;
+    outline: none;
+    transition: all 0.2s ease;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.volume-controls:hover .volume-slider {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.volume-slider::-webkit-slider-thumb {
+    appearance: none;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--volume-color);
+    cursor: pointer;
+}
+
+.speed-btn {
+    font-size: 0.9rem;
+    width: auto;
+    padding: 0 10px;
+    border-radius: 4px;
+}
+
+.quality-menu, .speed-menu {
+    position: absolute;
+    bottom: 70px;
+    right: 15px;
+    background: var(--control-bg);
+    border-radius: 8px;
+    padding: 10px 0;
+    display: none;
+    flex-direction: column;
+    z-index: 4;
+}
+
+.quality-menu.active, .speed-menu.active {
+    display: flex;
+}
+
+.quality-option, .speed-option {
+    background: transparent;
+    border: none;
+    color: var(--text-color);
+    padding: 8px 20px;
+    text-align: right;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.quality-option:hover, .speed-option:hover {
+    background: var(--hover-color);
+}
+
+.quality-option.active, .speed-option.active {
+    color: var(--highlight-color);
+    font-weight: bold;
+}
+
+/* تصميم متجاوب */
+@media (max-width: 768px) {
+    .video-title {
+        font-size: 1.5rem;
+    }
+    
+    .big-play-btn {
+        width: 60px;
+        height: 60px;
+        font-size: 24px;
+    }
+    
+    .left-controls, .right-controls {
+        gap: 10px;
+    }
+    
+    .control-btn {
+        width: 32px;
+        height: 32px;
+        font-size: 1rem;
+    }
+    
+    .volume-slider {
+        width: 60px;
+    }
+    
+    .time-display {
+        font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .video-title {
+        font-size: 1.2rem;
+    }
+    
+    .initial-overlay {
+        padding: 0 20px;
+    }
+    
+    .video-controls {
+        padding: 8px 10px;
+    }
+    
+    .time-separator {
+        display: none;
+    }
+    
+    #currentTime {
+        display: none;
+    }
+    
+    .volume-slider {
+        display: none;
+    }
+}

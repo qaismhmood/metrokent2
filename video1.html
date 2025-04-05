@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>واجهة فيديو 9:16</title>
+    <link rel="stylesheet" href="video1.css">
+</head>
+<body>
+    <div class="video-container">
+        <video id="myVideo" class="video-player" controls autoplay muted playsinline>
+            <source src="img/videomm.MP4" type="video/mp4">
+            متصفحك لا يدعم تشغيل الفيديو.
+        </video>
+        
+        <div class="video-controls">
+            <button id="playPauseBtn" class="control-btn">▶ تشغيل</button>
+            <input type="range" id="progressBar" class="progress-bar" value="0">
+            <button id="muteBtn" class="control-btn">🔊 صوت</button>
+            <button id="fullscreenBtn" class="control-btn">⛶ ملء الشاشة</button>
+        </div>
+        
+        <div class="video-info">
+            <h2 class="video-title">عنوان الفيديو هنا</h2>
+            <p class="video-description">وصف الفيديو هنا...</p>
+        </div>
+    </div>
+
+    <script src="video1.js"></script>
+</body>
+</html>
